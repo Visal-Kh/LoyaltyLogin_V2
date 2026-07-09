@@ -1,1 +1,19 @@
+name: LoyaltyLogin
+version: '2.0.0'
+main: me.loyalty.loyaltylogin.LoyaltyLogin
+api-version: '1.21'
+author: LoyaltyMC
+description: Premium + Cracked Login Plugin for PaperMC 1.21.11
 
+commands:
+  register:
+    description: Register your account
+    usage: /register <password> <password>
+
+  login:
+    description: Login to your account
+    usage: /login <password>
+
+permissions:
+  loyaltylogin.admin:
+    default: op
