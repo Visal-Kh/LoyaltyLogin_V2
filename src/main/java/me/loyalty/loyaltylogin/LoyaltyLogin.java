@@ -5,15 +5,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class LoyaltyLogin extends JavaPlugin {
 
     private static LoyaltyLogin instance;
+    private PlayerManager playerManager;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        getLogger().info("=================================");
-        getLogger().info(" LoyaltyLogin v2.0 Enabled!");
-        getLogger().info(" Author: LoyaltyMC");
-        getLogger().info("=================================");
+        saveDefaultConfig();
+
+        playerManager = new PlayerManager();
+
+        getLogger().info("LoyaltyLogin v2 Enabled!");
     }
 
     @Override
@@ -23,5 +25,9 @@ public class LoyaltyLogin extends JavaPlugin {
 
     public static LoyaltyLogin getInstance() {
         return instance;
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
     }
 }
