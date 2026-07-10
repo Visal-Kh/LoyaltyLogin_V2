@@ -58,8 +58,3 @@ public boolean isRegistered(String uuid) {
     return false;
 }
 }
-        e.printStackTrace();
-    }
-
-    return false;
-}
