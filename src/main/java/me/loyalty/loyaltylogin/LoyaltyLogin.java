@@ -1,6 +1,5 @@
 package me.loyalty.loyaltylogin;
 import me.loyalty.loyaltylogin.database.DatabaseManager;
-import me.loyalty.loyaltylogin.PlayerManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class LoyaltyLogin extends JavaPlugin {
