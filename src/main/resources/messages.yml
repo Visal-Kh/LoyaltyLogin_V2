@@ -1,1 +1,17 @@
+prefix: "&6[LoyaltyLogin] "
 
+register: "&eសូមវាយ &a/register <password> <password> &eដើម្បីចុះឈ្មោះ។"
+
+login: "&eសូមវាយ &a/login <password> &eដើម្បីចូល។"
+
+login-success: "&aអ្នកបាន Login ដោយជោគជ័យ!"
+
+register-success: "&aអ្នកបាន Register ដោយជោគជ័យ!"
+
+wrong-password: "&cPassword មិនត្រឹមត្រូវ!"
+
+already-registered: "&cអ្នកបាន Register រួចហើយ!"
+
+not-registered: "&cអ្នកមិនទាន់ Register ទេ!"
+
+premium-login: "&bស្វាគមន៍ Premium Player!"
