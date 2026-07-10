@@ -33,4 +33,7 @@ public class LoyaltyLogin extends JavaPlugin {
     public PlayerManager getPlayerManager() {
         return playerManager;
     }
+    public DatabaseManager getDatabaseManager() {
+    return databaseManager;
+    }
 }
