@@ -6,6 +6,7 @@ public class LoyaltyLogin extends JavaPlugin {
 
     private static LoyaltyLogin instance;
     private PlayerManager playerManager;
+    private DatabaseManager databaseManager;
 
     @Override
     public void onEnable() {
