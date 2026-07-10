@@ -16,7 +16,8 @@ public class LoyaltyLogin extends JavaPlugin {
         saveDefaultConfig();
 
         playerManager = new PlayerManager();
-
+        databaseManager = new DatabaseManager();
+databaseManager.connect();
         getLogger().info("LoyaltyLogin v2 Enabled!");
     }
 
