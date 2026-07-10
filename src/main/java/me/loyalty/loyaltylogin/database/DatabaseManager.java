@@ -27,3 +27,17 @@ public class DatabaseManager {
         return connection;
     }
 }
+    public void createTables() {
+    try {
+        connection.createStatement().executeUpdate(
+                "CREATE TABLE IF NOT EXISTS players (" +
+                "uuid TEXT PRIMARY KEY," +
+                "name TEXT NOT NULL," +
+                "password TEXT," +
+                "premium INTEGER DEFAULT 0" +
+                ");"
+        );
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
