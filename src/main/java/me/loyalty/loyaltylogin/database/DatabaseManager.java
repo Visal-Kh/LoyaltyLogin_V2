@@ -57,4 +57,21 @@ public boolean isRegistered(String uuid) {
 
     return false;
 }
+    public void registerPlayer(String uuid, String name, String password) {
+    try {
+        var statement = connection.prepareStatement(
+                "INSERT INTO players (uuid, name, password, premium) VALUES (?, ?, ?, ?)"
+        );
+
+        statement.setString(1, uuid);
+        statement.setString(2, name);
+        statement.setString(3, password);
+        statement.setInt(4, 0);
+
+        statement.executeUpdate();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
 }
