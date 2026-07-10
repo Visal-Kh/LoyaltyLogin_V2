@@ -1,4 +1,4 @@
-package me.loyalty.loyaltylogin.database;
+public me.loyalty.loyaltylogin.database;
 
 import java.io.File;
 import java.sql.Connection;
@@ -23,11 +23,11 @@ public class DatabaseManager {
         }
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
+public Connection getConnection() {
+    return connection;
 }
-    public void createTables() {
+
+public void createTables() {
     try {
         connection.createStatement().executeUpdate(
                 "CREATE TABLE IF NOT EXISTS players (" +
@@ -40,7 +40,9 @@ public class DatabaseManager {
     } catch (Exception e) {
         e.printStackTrace();
     }
-    public boolean isRegistered(String uuid) {
+}
+
+public boolean isRegistered(String uuid) {
     try {
         var statement = connection.prepareStatement(
                 "SELECT uuid FROM players WHERE uuid = ?"
@@ -50,6 +52,12 @@ public class DatabaseManager {
         var result = statement.executeQuery();
         return result.next();
     } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return false;
+}
+}
         e.printStackTrace();
     }
 
