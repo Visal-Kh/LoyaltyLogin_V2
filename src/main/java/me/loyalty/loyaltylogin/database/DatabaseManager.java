@@ -41,3 +41,18 @@ public class DatabaseManager {
         e.printStackTrace();
     }
 }
+    public boolean isRegistered(String uuid) {
+    try {
+        var statement = connection.prepareStatement(
+                "SELECT uuid FROM players WHERE uuid = ?"
+        );
+        statement.setString(1, uuid);
+
+        var result = statement.executeQuery();
+        return result.next();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return false;
+}
