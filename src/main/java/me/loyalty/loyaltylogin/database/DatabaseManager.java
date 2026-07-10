@@ -40,7 +40,6 @@ public class DatabaseManager {
     } catch (Exception e) {
         e.printStackTrace();
     }
-}
     public boolean isRegistered(String uuid) {
     try {
         var statement = connection.prepareStatement(
