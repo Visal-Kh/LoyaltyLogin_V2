@@ -11,67 +11,127 @@ public class DatabaseManager {
 
     private Connection connection;
 
+
     public void connect() {
+
         try {
-            File file = new File(LoyaltyLogin.getInstance().getDataFolder(), "database.db");
 
-            connection = DriverManager.getConnection("jdbc:sqlite:" + file);
+            File file = new File(
+                    LoyaltyLogin.getInstance().getDataFolder(),
+                    "database.db"
+            );
 
-            LoyaltyLogin.getInstance().getLogger().info("SQLite Connected!");
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+
+            connection = DriverManager.getConnection(
+                    "jdbc:sqlite:" + file
+            );
+
+
+            LoyaltyLogin.getInstance()
+                    .getLogger()
+                    .info("SQLite Connected!");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-public Connection getConnection() {
-    return connection;
-}
 
-public void createTables() {
-    try {
-        connection.createStatement().executeUpdate(
-                "CREATE TABLE IF NOT EXISTS players (" +
-                "uuid TEXT PRIMARY KEY," +
-                "name TEXT NOT NULL," +
-                "password TEXT," +
-                "premium INTEGER DEFAULT 0" +
-                ");"
-        );
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
-
-public boolean isRegistered(String uuid) {
-    try {
-        var statement = connection.prepareStatement(
-                "SELECT uuid FROM players WHERE uuid = ?"
-        );
-        statement.setString(1, uuid);
-
-        var result = statement.executeQuery();
-        return result.next();
-    } catch (Exception e) {
-        e.printStackTrace();
+    public Connection getConnection() {
+        return connection;
     }
 
-    return false;
-}
-    public void registerPlayer(String uuid, String name, String password) {
-    try {
-        var statement = connection.prepareStatement(
-                "INSERT INTO players (uuid, name, password, premium) VALUES (?, ?, ?, ?)"
-        );
 
-        statement.setString(1, uuid);
-        statement.setString(2, name);
-        statement.setString(3, password);
-        statement.setInt(4, 0);
+    public void createTables() {
 
-        statement.executeUpdate();
+        try {
 
-    } catch (Exception e) {
-        e.printStackTrace();
+            connection.createStatement()
+                    .executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS players (" +
+                    "uuid TEXT PRIMARY KEY," +
+                    "name TEXT NOT NULL," +
+                    "password TEXT NOT NULL," +
+                    "premium INTEGER DEFAULT 0" +
+                    ");"
+            );
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+
+    public boolean isRegistered(String uuid) {
+
+        try {
+
+            var ps = connection.prepareStatement(
+                    "SELECT uuid FROM players WHERE uuid=?"
+            );
+
+            ps.setString(1, uuid);
+
+            var rs = ps.executeQuery();
+
+            return rs.next();
+
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
+        return false;
+    }
+
+
+    public void registerPlayer(
+            String uuid,
+            String name,
+            String password
+    ) {
+
+        try {
+
+            var ps = connection.prepareStatement(
+                    "INSERT INTO players(uuid,name,password) VALUES(?,?,?)"
+            );
+
+
+            ps.setString(1, uuid);
+            ps.setString(2, name);
+            ps.setString(3, password);
+
+
+            ps.executeUpdate();
+
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void disconnect() {
+
+        try {
+
+            if(connection != null) {
+                connection.close();
+            }
+
+        } catch(SQLException e) {
+
+            e.printStackTrace();
+
+        }
     }
 }
