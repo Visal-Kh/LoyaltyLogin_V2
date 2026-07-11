@@ -15,6 +15,7 @@ public class LoyaltyLogin extends JavaPlugin {
     private PlayerManager playerManager;
     private DatabaseManager databaseManager;
     private LoginManager loginManager;
+    private PremiumManager premiumManager;
 
 
     @Override
