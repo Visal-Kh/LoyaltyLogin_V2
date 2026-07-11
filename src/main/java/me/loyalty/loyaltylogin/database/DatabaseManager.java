@@ -1,4 +1,4 @@
-public me.loyalty.loyaltylogin.database;
+package me.loyalty.loyaltylogin.database;
 
 import java.io.File;
 import java.sql.Connection;
