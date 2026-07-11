@@ -1,31 +1,35 @@
 package me.loyalty.loyaltylogin.premium;
 
-import me.loyalty.loyaltylogin.database.DatabaseManager;
-
 import java.util.UUID;
+
+import me.loyalty.loyaltylogin.database.DatabaseManager;
 
 public class PremiumManager {
 
-    private final DatabaseManager database;
+    private final DatabaseManager databaseManager;
 
 
-    public PremiumManager(DatabaseManager database) {
-        this.database = database;
+    public PremiumManager(DatabaseManager databaseManager) {
+
+        this.databaseManager = databaseManager;
+
     }
+
 
 
     public boolean isPremium(UUID uuid) {
 
-        return database.isPremium(
+        return databaseManager.isPremium(
                 uuid.toString()
         );
 
     }
 
 
+
     public void setPremium(UUID uuid) {
 
-        database.setPremium(
+        databaseManager.setPremium(
                 uuid.toString()
         );
 
