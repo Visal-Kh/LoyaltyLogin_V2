@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import me.loyalty.loyaltylogin.LoyaltyLogin;
+import me.loyalty.loyaltylogin.security.PasswordManager;
 
 public class DatabaseManager {
 
@@ -62,15 +63,10 @@ public class DatabaseManager {
                     .executeUpdate(
 
                     "CREATE TABLE IF NOT EXISTS players (" +
-
                     "uuid TEXT PRIMARY KEY," +
-
                     "name TEXT NOT NULL," +
-
                     "password TEXT NOT NULL," +
-
                     "premium INTEGER DEFAULT 0" +
-
                     ");"
 
             );
@@ -85,16 +81,15 @@ public class DatabaseManager {
 
 
 
+
+
     public boolean isRegistered(String uuid) {
 
 
         try {
 
-
             var ps = connection.prepareStatement(
-
                     "SELECT uuid FROM players WHERE uuid=?"
-
             );
 
 
@@ -107,12 +102,9 @@ public class DatabaseManager {
             return rs.next();
 
 
-
         } catch (SQLException e) {
 
-
             e.printStackTrace();
-
 
         }
 
@@ -120,6 +112,8 @@ public class DatabaseManager {
         return false;
 
     }
+
+
 
 
 
@@ -146,8 +140,15 @@ public class DatabaseManager {
 
             ps.setString(2, name);
 
-            ps.setString(3, password);
 
+            // Hash Password
+            ps.setString(
+                    3,
+                    PasswordManager.hash(password)
+            );
+
+
+            // Cracked player
             ps.setInt(4, 0);
 
 
@@ -158,13 +159,13 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
 
-
             e.printStackTrace();
-
 
         }
 
     }
+
+
 
 
 
@@ -190,7 +191,6 @@ public class DatabaseManager {
             ps.setString(1, uuid);
 
 
-
             var rs = ps.executeQuery();
 
 
@@ -203,8 +203,10 @@ public class DatabaseManager {
 
 
 
-                return savedPassword.equals(password);
-
+                return PasswordManager.verify(
+                        password,
+                        savedPassword
+                );
 
             }
 
@@ -212,9 +214,7 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
 
-
             e.printStackTrace();
-
 
         }
 
@@ -223,6 +223,7 @@ public class DatabaseManager {
         return false;
 
     }
+
 
 
 
@@ -249,12 +250,10 @@ public class DatabaseManager {
             }
 
 
-
         } catch (SQLException e) {
 
 
             e.printStackTrace();
-
 
         }
 
