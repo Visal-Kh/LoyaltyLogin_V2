@@ -47,11 +47,14 @@ public class DatabaseManager {
 
 
 
+
     public Connection getConnection() {
 
         return connection;
 
     }
+
+
 
 
 
@@ -77,7 +80,10 @@ public class DatabaseManager {
             e.printStackTrace();
 
         }
+
     }
+
+
 
 
 
@@ -87,6 +93,7 @@ public class DatabaseManager {
 
 
         try {
+
 
             var ps = connection.prepareStatement(
                     "SELECT uuid FROM players WHERE uuid=?"
@@ -102,9 +109,12 @@ public class DatabaseManager {
             return rs.next();
 
 
+
         } catch (SQLException e) {
 
+
             e.printStackTrace();
+
 
         }
 
@@ -112,6 +122,7 @@ public class DatabaseManager {
         return false;
 
     }
+
 
 
 
@@ -141,7 +152,7 @@ public class DatabaseManager {
             ps.setString(2, name);
 
 
-            // Hash Password
+            // Save hashed password
             ps.setString(
                     3,
                     PasswordManager.hash(password)
@@ -159,7 +170,9 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
 
+
             e.printStackTrace();
+
 
         }
 
@@ -191,7 +204,9 @@ public class DatabaseManager {
             ps.setString(1, uuid);
 
 
+
             var rs = ps.executeQuery();
+
 
 
 
@@ -212,9 +227,12 @@ public class DatabaseManager {
 
 
 
+
         } catch (SQLException e) {
 
+
             e.printStackTrace();
+
 
         }
 
@@ -223,6 +241,101 @@ public class DatabaseManager {
         return false;
 
     }
+
+
+
+
+
+
+
+
+    // Check Premium Status
+    public boolean isPremium(String uuid) {
+
+
+        try {
+
+
+            var ps = connection.prepareStatement(
+
+                    "SELECT premium FROM players WHERE uuid=?"
+
+            );
+
+
+            ps.setString(1, uuid);
+
+
+
+            var rs = ps.executeQuery();
+
+
+
+
+            if (rs.next()) {
+
+
+                return rs.getInt("premium") == 1;
+
+            }
+
+
+
+
+        } catch (SQLException e) {
+
+
+            e.printStackTrace();
+
+
+        }
+
+
+
+        return false;
+
+    }
+
+
+
+
+
+
+
+
+
+    // Set Player Premium
+    public void setPremium(String uuid) {
+
+
+        try {
+
+
+            var ps = connection.prepareStatement(
+
+                    "UPDATE players SET premium=1 WHERE uuid=?"
+
+            );
+
+
+            ps.setString(1, uuid);
+
+
+            ps.executeUpdate();
+
+
+
+        } catch (SQLException e) {
+
+
+            e.printStackTrace();
+
+
+        }
+
+    }
+
+
 
 
 
@@ -250,10 +363,12 @@ public class DatabaseManager {
             }
 
 
+
         } catch (SQLException e) {
 
 
             e.printStackTrace();
+
 
         }
 
