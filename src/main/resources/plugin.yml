@@ -8,7 +8,7 @@ description: Premium + Cracked Login Plugin for PaperMC 1.21.11
 commands:
   register:
     description: Register your account
-    usage: /register <password> <password>
+    usage: /register <password>
 
   login:
     description: Login to your account
