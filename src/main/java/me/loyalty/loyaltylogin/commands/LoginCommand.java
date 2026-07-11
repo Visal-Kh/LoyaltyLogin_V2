@@ -27,54 +27,83 @@ public class LoginCommand implements CommandExecutor {
 
         if (!(sender instanceof Player player)) {
 
-            sender.sendMessage("Only players can use this command!");
-            return true;
+            sender.sendMessage(
+                    "Only players can use this command!"
+            );
 
+            return true;
         }
+
 
 
         if (args.length != 1) {
 
-            player.sendMessage("§cUsage: /login <password>");
-            return true;
+            player.sendMessage(
+                    "§cUsage: /login <password>"
+            );
 
+            return true;
         }
 
 
-        String uuid = player.getUniqueId().toString();
+
+        String uuid =
+                player.getUniqueId().toString();
+
+
         String password = args[0];
 
 
+
+        // Check account exists
+
         if (!plugin.getDatabaseManager()
                 .isRegistered(uuid)) {
+
 
             player.sendMessage(
                     "§cYou don't have an account! Use /register <password>"
             );
 
+
             return true;
+
         }
 
 
+
+
+
         // Check password
+
         if (!plugin.getDatabaseManager()
                 .checkPassword(uuid, password)) {
+
 
             player.sendMessage(
                     "§cWrong password!"
             );
 
+
             return true;
+
         }
 
+
+
+
+
+        // Add player to login list
 
         plugin.getLoginManager()
                 .login(player.getUniqueId());
 
 
+
         player.sendMessage(
-                "§aLogin successful!"
+                "§aLogin successful! Welcome back."
         );
+
 
 
         return true;
