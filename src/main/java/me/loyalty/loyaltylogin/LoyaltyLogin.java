@@ -1,5 +1,7 @@
 package me.loyalty.loyaltylogin;
 
+import me.loyalty.loyaltylogin.commands.LoginCommand;
+import me.loyalty.loyaltylogin.commands.RegisterCommand;
 import me.loyalty.loyaltylogin.database.DatabaseManager;
 import me.loyalty.loyaltylogin.login.LoginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,14 +23,31 @@ public class LoyaltyLogin extends JavaPlugin {
         saveDefaultConfig();
 
 
+        // Player Manager
         playerManager = new PlayerManager();
 
+
+        // Database
         databaseManager = new DatabaseManager();
         databaseManager.connect();
         databaseManager.createTables();
 
 
+        // Login Manager
         loginManager = new LoginManager();
+
+
+        // Commands
+        if (getCommand("register") != null) {
+            getCommand("register")
+                    .setExecutor(new RegisterCommand(this));
+        }
+
+
+        if (getCommand("login") != null) {
+            getCommand("login")
+                    .setExecutor(new LoginCommand(this));
+        }
 
 
         getLogger().info("LoyaltyLogin v2 Enabled!");
@@ -38,11 +57,13 @@ public class LoyaltyLogin extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        if(databaseManager != null) {
+
+        if (databaseManager != null) {
             databaseManager.disconnect();
         }
 
-        if(loginManager != null) {
+
+        if (loginManager != null) {
             loginManager.clear();
         }
 
