@@ -56,12 +56,13 @@ public class RegisterCommand implements CommandExecutor {
         }
 
 
-        plugin.getDatabaseManager()
-                .registerPlayer(
-                        uuid,
-                        name,
-                        password
-                );
+String hashedPassword = PasswordUtil.hash(password);
+
+plugin.getDatabaseManager().registerPlayer(
+    uuid,
+    name,
+    hashedPassword
+);
 
 
         player.sendMessage(
